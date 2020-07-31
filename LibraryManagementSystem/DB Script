@@ -1,0 +1,42 @@
+require 'sequel'
+DB = Sequel.connect('sqlite://library.db')
+
+DB.create_table :book_item do
+  primary_key :id
+  String :title
+  String :authors
+  String :language
+  Integer :status
+  String :barcode
+  Integer :lending_id
+  String :rack_id
+end
+
+DB.create_table :notifications do
+  primary_key :id
+  Integer :member_id
+  Integer :book_item_id
+end
+
+DB.create_table :reservations do
+  primary_key :id
+  Integer :member_id
+  Integer :book_item_id
+  Integer :status
+end
+
+DB.create_table :book_lending do
+  primary_key :id
+  Integer :member_id
+  Integer :book_item_id
+  DateTime :issued_at
+  DateTime :due_date
+  DateTime :returned_at
+  Integer :status
+end
+
+DB.create_table :members do
+  primary_key :id
+  String :name
+  String :bar_code
+end
